@@ -1,4 +1,4 @@
-html {
+/* html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -59,7 +59,6 @@ dfn {
   font-style: italic;
 }
 h1 {
-  font-size: 2em;
   margin: .67em 0;
 }
 mark {
@@ -621,4 +620,4 @@ pre tt:after {
   html {
     font-size: 100%;
   }
-}
+} */
