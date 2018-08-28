@@ -12,9 +12,11 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `rounds`,
-        path: `${__dirname}/../../rounds/`
+        path: `${__dirname}/data/`
       }
     },
-    'gatsby-plugin-react-helmet'
+    'gatsby-plugin-react-helmet',
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`
   ]
 }
