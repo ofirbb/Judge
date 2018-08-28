@@ -14,6 +14,7 @@
     "gatsby-transformer-sharp": "^1.6.27",
     "js-search": "^1.4.2",
     "react-helmet": "^5.2.0",
+    "react-masonry-component": "^6.2.1",
     "typography-theme-lawton": "^0.15.10"
   },
   "keywords": [

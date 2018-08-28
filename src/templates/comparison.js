@@ -1,7 +1,12 @@
 import React from "react";
 import * as JsSearch from 'js-search';
 import Img from "gatsby-image";
-import Sidebar from '../components/sidebar'
+import Masonry from 'react-masonry-component'
+
+const masonryOptions = {
+  columnWidth: 200,
+  itemSelector: '.grid-item'
+}
 
 export default ({
   data
@@ -21,12 +26,21 @@ export default ({
       return (
         <section key={style.name}>
         <h2>{style.name}</h2>
-        {searchAssets.search('/contents/').map((content) => {
-          let result = searchAssets.search(`results/${style.name}:${content.name}`)[0]
-          return (
-            <Img key={result.name} resolutions={result.childImageSharp.resolutions} />
-          )
-        })}
+                <Masonry
+                elementType={'div'}
+                options={masonryOptions}
+                >
+                {searchAssets.search('/contents/').map((content) => {
+                  let result = searchAssets.search(`results/${style.name}:${content.name}`)[0]
+                  return (
+                    <Img outerWrapperClassName='grid-item' imgStyle={{
+                      width:100,
+                      height:100
+                    }} resolutions={result.childImageSharp.resolutions} />
+
+                  )
+                })}
+                </Masonry>
         </section>
       )
     })
@@ -49,11 +63,7 @@ export const query = graphql `
           extension
           childImageSharp {
             resolutions(width:600, height:600, grayscale:true) {
-              base64
-              tracedSVG
               aspectRatio
-              width
-              height
               src
               srcSet
               srcWebp
