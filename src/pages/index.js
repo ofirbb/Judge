@@ -1,8 +1,9 @@
 import React from 'react'
 import Link from 'gatsby-link'
+import styles from './index.module.css'
 
 const IndexPage = () => (
-  <div>
+  <div className={styles.indexPage}>
     <h1>Hi people</h1>
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
