@@ -2,13 +2,53 @@ import React from 'react'
 import Link from 'gatsby-link'
 import styles from './index.module.css'
 
-const IndexPage = () => (
-  <div className={styles.indexPage}>
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <Link to="/page-2/">Go to page 2</Link>
-  </div>
-)
+String.prototype.capitalizeFirstLetter = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
+}
+
+const IndexPage = ({
+  data
+}) => {
+
+  let rounds = data.allDirectory.edges.filter(
+    (edge) => !edge.node.relativeDirectory
+  ).map((edge) => {
+    return {
+      name: edge.node.relativePath.replace('_', ' ').replace(
+        /\b\w/g,
+        l => l.toUpperCase()
+      ),
+      path: edge.node.relativePath
+    }
+  })
+
+  return (
+    <div>
+      <h1>Rounds:</h1>
+      <ul>
+        {
+          rounds.map(
+            (round, index) => (<li key={index}>
+              <Link to={round.path}>{round.name}</Link>
+            </li>)
+          )
+        }
+      </ul>
+    </div>
+  )
+}
+
+export const query = graphql `
+  query RoundsQuery {
+    allDirectory{
+        edges {
+          node {
+            relativePath
+            relativeDirectory
+          }
+        }
+      }
+  }
+`
 
 export default IndexPage

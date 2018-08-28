@@ -8,6 +8,7 @@
     "gatsby-link": "^1.6.46",
     "gatsby-plugin-react-helmet": "^2.0.11",
     "gatsby-plugin-typography": "^1.7.19",
+    "gatsby-source-filesystem": "^1.5.39",
     "react-helmet": "^5.2.0",
     "typography-theme-lawton": "^0.15.10"
   },
