@@ -4,8 +4,9 @@ import Img from "gatsby-image";
 import Masonry from 'react-masonry-component'
 
 const masonryOptions = {
-  columnWidth: 200,
-  itemSelector: '.grid-item'
+  itemSelector: '.grid-item',
+  columnWidth: '.grid-item',
+  percentPosition: true,
 }
 
 export default ({
@@ -25,20 +26,32 @@ export default ({
     searchAssets.search('/styles/').map((style, index) => {
       return (
         <section key={style.name}>
-        <h2>{style.name}</h2>
+        <h1>{style.name}</h1>
                 <Masonry
-                elementType={'div'}
                 options={masonryOptions}
+                elementType={'div'}
                 >
+                <div style={{
+                  width: "50%"
+                }} className='grid-item' key={style.name}>
+                  <img src={style.childImageSharp.resolutions.src}></img>
+                </div>
                 {searchAssets.search('/contents/').map((content) => {
-                  let result = searchAssets.search(`results/${style.name}:${content.name}`)[0]
-                  return (
-                    <Img outerWrapperClassName='grid-item' imgStyle={{
-                      width:100,
-                      height:100
-                    }} resolutions={result.childImageSharp.resolutions} />
-
-                  )
+                  let result = searchAssets.search(`results/${style.name}+${content.name}`)[0]
+                  if (result) {
+                    return (
+                      <div style={{
+                        width: "50%"
+                      }} className='grid-item' key={result.name}>
+                        <img css={{
+                          'content': 'url(' + result.childImageSharp.resolutions.src + ')',
+                          ':hover': {
+                            'content': 'url(' + content.childImageSharp.resolutions.src + ')',
+                          }
+                        }}></img>
+                      </div>
+                    )
+                  }
                 })}
                 </Masonry>
         </section>
@@ -76,3 +89,8 @@ export const query = graphql `
     }
   }
 `;
+//
+// <Img key={result.name} outerWrapperClassName='grid-item' imgStyle={{
+//   width:100,
+//   height:100
+// }} resolutions={result.childImageSharp.resolutions} />
