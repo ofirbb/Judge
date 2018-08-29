@@ -5,8 +5,7 @@ import Masonry from 'react-masonry-component'
 
 const masonryOptions = {
   itemSelector: '.grid-item',
-  columnWidth: '.grid-item',
-  percentPosition: true,
+  percentPosition: true
 }
 
 export default ({
@@ -22,42 +21,52 @@ export default ({
   searchAssets.addDocuments(data.allFile.edges.map((edge) => edge.node))
 
   return <div>
-  {
-    searchAssets.search('/styles/').map((style, index) => {
-      return (
-        <section key={style.name}>
-        <h1>{style.name}</h1>
-                <Masonry
-                options={masonryOptions}
-                elementType={'div'}
-                >
-                <div style={{
-                  width: "50%"
-                }} className='grid-item' key={style.name}>
-                  <img src={style.childImageSharp.resolutions.src}></img>
-                </div>
-                {searchAssets.search('/contents/').map((content) => {
+    {
+      searchAssets.search('/styles/').map((style, index) => {
+        return (
+          <section key={style.name}>
+            <h1>{style.name}</h1>
+            <Masonry options={masonryOptions} elementType={'div'}>
+              <div
+                style={{
+                  width: "50%",
+                }}
+                className='grid-item'
+                key={style.name}>
+                <img css={{
+                  width: "100%",
+                  marginBottom: 0,
+                }} src={style.childImageSharp.resolutions.src}></img>
+              </div>
+              {
+                searchAssets.search('/contents/').map((content) => {
                   let result = searchAssets.search(`results/${style.name}+${content.name}`)[0]
                   if (result) {
                     return (
-                      <div style={{
-                        width: "50%"
-                      }} className='grid-item' key={result.name}>
-                        <img css={{
-                          'content': 'url(' + result.childImageSharp.resolutions.src + ')',
-                          ':hover': {
-                            'content': 'url(' + content.childImageSharp.resolutions.src + ')',
-                          }
-                        }}></img>
+                      <div
+                        style={{
+                          width: "50%"
+                        }}
+                        className='grid-item'
+                        key={result.name}>
+                        <img
+                          css={{
+                            marginBottom: 0,
+                            'content' : 'url(' + result.childImageSharp.resolutions.src + ')',
+                            ':hover' : {
+                              'content': 'url(' + content.childImageSharp.resolutions.src + ')'
+                            }
+                          }}></img>
                       </div>
                     )
                   }
-                })}
-                </Masonry>
-        </section>
-      )
-    })
-  }</div>;
+                })
+              }
+            </Masonry>
+          </section>
+        )
+      })
+    }</div>;
 };
 
 export const query = graphql `
@@ -91,6 +100,5 @@ export const query = graphql `
 `;
 //
 // <Img key={result.name} outerWrapperClassName='grid-item' imgStyle={{
-//   width:100,
-//   height:100
-// }} resolutions={result.childImageSharp.resolutions} />
+// width:100,   height:100 }} resolutions={result.childImageSharp.resolutions}
+// />
