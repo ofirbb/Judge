@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: 'Comparatricks'
+    title: 'Judge'
   },
   plugins: [{
       resolve: `gatsby-plugin-typography`,
@@ -17,6 +17,7 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    `gatsby-plugin-glamor`
+    `gatsby-plugin-glamor`,
+    `gatsby-transformer-remark`
   ]
 }
