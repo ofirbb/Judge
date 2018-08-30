@@ -40,7 +40,7 @@ export default ({
     {
       searchAssets.search('/styles/').sort(compareBy('name')).map((style, index) => {
         return (
-          <section key={style.name}>
+          <section id={style.name} key={style.name}>
             <h1 css={{
               margin: '1rem 0'
             }}>{style.name}</h1>
