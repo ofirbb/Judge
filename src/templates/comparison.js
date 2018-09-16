@@ -1,3 +1,14 @@
+/**
+ * @Author: Shaked Lokits <slokits>
+ * @Date:   2018-09-16T10:45:52+03:00
+ * @Email:  shaked.lokits@gmail.com
+ * @Filename: comparison.js
+ * @Last modified by:   slokits
+ * @Last modified time: 2018-09-16T14:41:51+03:00
+ */
+
+
+
 import React from "react";
 import * as JsSearch from 'js-search';
 import Img from "gatsby-image";
@@ -27,7 +38,8 @@ export default ({
   searchAssets.addIndex('name')
   searchAssets.addIndex('extension')
   searchAssets.addDocuments(data.allFile.edges.map((edge) => edge.node))
-
+  console.log(searchAssets.search('/styles/').sort(compareBy('name')));
+  console.log(data.directory);
   return <div>
     {data.markdownRemark && (
           <div css={{
@@ -56,11 +68,11 @@ export default ({
                   outlineOffset: '-10px',
                   width: "100%",
                   marginBottom: 0,
-                }} src={style.childImageSharp.resolutions.src}></img>
+                }} src={style.childImageSharp.resize.src}></img>
               </div>
               {
                 searchAssets.search('/contents/').map((content) => {
-                  let result = searchAssets.search(`results/${style.name}+${content.name}`)[0]
+                  let result = searchAssets.search(`results/${style.name}~${content.name}`)[0]
                   if (result) {
                     return (
                       <div
@@ -72,9 +84,9 @@ export default ({
                         <img
                           css={{
                             marginBottom: 0,
-                            'content' : 'url(' + result.childImageSharp.resolutions.src + ')',
+                            'content' : 'url(' + result.childImageSharp.resize.src + ')',
                             ':hover' : {
-                              'content': 'url(' + content.childImageSharp.resolutions.src + ')'
+                              'content': 'url(' + content.childImageSharp.resize.src + ')'
                             }
                           }}></img>
                       </div>
@@ -90,7 +102,7 @@ export default ({
 };
 
 export const query = graphql `
-  query ComparisonQuery($slug: String!) {
+  query ComparisonQuery($slug: String!, $directoryRegex: String!) {
       directory(fields: { slug: { eq: $slug } }) {
         relativePath
         fields {
@@ -100,20 +112,15 @@ export const query = graphql `
     markdownRemark(fileAbsolutePath: {regex: $slug}) {
     html
   }
-    	allFile(filter:{relativePath: {regex: $slug}, extension: {regex: "/png|jpg/i"}}) {
+    	allFile(filter:{relativePath: {regex: $directoryRegex}, extension: {regex: "/png|jpg/i"}}) {
       edges {
         node {
           relativePath
           name
           extension
           childImageSharp {
-            resolutions(width:600, height:600, grayscale:true) {
-              aspectRatio
+            resize(width:600, height:600, grayscale:true) {
               src
-              srcSet
-              srcWebp
-              srcSetWebp
-              originalName
             }
           }
         }
@@ -121,6 +128,18 @@ export const query = graphql `
     }
   }
 `;
+
+// childImageSharp {
+//   resize(width:600, height:600, grayscale:true) {
+//     aspectRatio
+//     src
+//     srcSet
+//     srcWebp
+//     srcSetWebp
+//     originalName
+//   }
+// }
+
 //
 // <Img key={result.name} outerWrapperClassName='grid-item' imgStyle={{
 // width:100,   height:100 }} resolutions={result.childImageSharp.resolutions}
