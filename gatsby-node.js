@@ -1,4 +1,15 @@
 /**
+ * @Author: Shaked Lokits <slokits>
+ * @Date:   2018-08-28T16:34:09+03:00
+ * @Email:  shaked.lokits@gmail.com
+ * @Filename: gatsby-node.js
+ * @Last modified by:   slokits
+ * @Last modified time: 2018-09-16T12:36:37+03:00
+ */
+
+
+
+/**
  * Implement Gatsby's Node APIs in this file.
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
@@ -21,6 +32,7 @@ exports.onCreateNode = ({
 
   if (node.sourceInstanceName == 'rounds' && !node.relativeDirectory &&
     node.relativePath && node.internal.type === 'Directory') {
+      // console.log(node);
     const slug = createFilePath({
       node,
       getNode,
@@ -71,6 +83,7 @@ exports.createPages = ({
           context: {
             // Data passed to context is available in page queries as GraphQL variables.
             slug: node.fields.slug,
+            directoryRegex: "/^" + node.relativePath + "\//"
           },
         })
       })
