@@ -1,3 +1,14 @@
+/**
+ * @Author: Shaked Lokits <slokits>
+ * @Date:   2018-08-28T15:32:14+03:00
+ * @Email:  shaked.lokits@gmail.com
+ * @Filename: index.js
+ * @Last modified by:   slokits
+ * @Last modified time: 2018-09-16T14:37:32+03:00
+ */
+
+
+
 import React from 'react'
 import Link from 'gatsby-link'
 import styles from './index.module.css'
@@ -29,7 +40,7 @@ const IndexPage = ({
         {
           rounds.map(
             (round, index) => (<li key={index}>
-              <Link to={round.path}>{round.name}</Link>
+              <Link to={round.path + '/index.html'}>{round.name}</Link>
             </li>)
           )
         }
