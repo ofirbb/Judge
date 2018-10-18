@@ -4,7 +4,7 @@
  * @Email:  shaked.lokits@gmail.com
  * @Filename: comparison.js
  * @Last modified by:   slokits
- * @Last modified time: 2018-09-16T14:41:51+03:00
+ * @Last modified time: 2018-10-16T16:02:35+03:00
  */
 
 
@@ -38,8 +38,6 @@ export default ({
   searchAssets.addIndex('name')
   searchAssets.addIndex('extension')
   searchAssets.addDocuments(data.allFile.edges.map((edge) => edge.node))
-  console.log(searchAssets.search('/styles/').sort(compareBy('name')));
-  console.log(data.directory);
   return <div>
     {data.markdownRemark && (
           <div css={{
@@ -55,7 +53,7 @@ export default ({
           <section id={style.name} key={style.name}>
             <h1 css={{
               margin: '1rem 0'
-            }}>{style.name}</h1>
+            }}>{`${index}: ${style.name}`}</h1>
             <Masonry options={masonryOptions} elementType={'div'}>
               <div
                 style={{
